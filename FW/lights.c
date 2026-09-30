@@ -8,7 +8,7 @@
 #include "stdlib.h"
 #include "hardware/adc.h"
 #include "hardware/pwm.h"
-
+#include "stdio.h"
 
 #define REAR_LIGHT_OUT_PWM_PIN 8
 #define REAR_LIGHT_IN_PIN 26  //ADC0
@@ -18,13 +18,13 @@
 //input levels for brake lights
 //#define REAR_LIGHT_OFF_LEVEL 3000
 //#define REAR_LIGHT_ON_LEVEL 1500
-#define REAR_LIGHT_BRAKE_LEVEL 2000    //1600 brzdy,   2250 svetla
+#define REAR_LIGHT_BRAKE_LEVEL 980    //945 brzdy,   1020 svetla
 
 #define REAR_LIGHT_OFF_PWM_LEVEL 0 //0-2000
 #define REAR_LIGHT_ON_PWM_LEVEL 500 //0-2000
 #define REAR_LIGHT_BRAKE_PWM_LEVEL 2000 //0-2000
 
-#define LIGHTS_SW_LEVEL 1500 // switch value for lights ON/OFF
+#define LIGHTS_SW_LEVEL 1600 // switch value for lights ON/OFF
 
 uint pwm_slice_num_rearlight;  //slice
 uint pwm_chan_num_rearlight;  //channel A/B
@@ -120,10 +120,13 @@ void lights_init(void) {
 
 
 void light_service(void) {
-
+    static uint32_t last_val;
     //brakes lights service
     uint32_t tmp = my_adc_get_data();
-    //printf("Rear Light: %u\n", tmp);
+    if (tmp != last_val) {
+        last_val = tmp;
+        //printf("Rear Light: %u\n", (uint) tmp);
+    }
     if (tmp < REAR_LIGHT_BRAKE_LEVEL) {
         //brakes on
         rear_light_brake_on();

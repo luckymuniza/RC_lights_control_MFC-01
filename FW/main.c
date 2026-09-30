@@ -1,14 +1,14 @@
 
-#include <stdio.h>
-#include "pico/stdlib.h"
-#include <time.h>
-#include "ibus.h"
-#include"lights.h"
-#include "turn_light.h"
-#include "to_mfc.h"
-#include "beacon.h"
+        #include <stdio.h>
+        #include "pico/stdlib.h"
+        #include <time.h>
+        #include "ibus.h"
+        #include"lights.h"
+        #include "turn_light.h"
+        #include "to_mfc.h"
+        #include "beacon.h"
 
-#define DBG
+        #define DBG
 
 
 #define LED_PIN 25

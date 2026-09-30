@@ -13378,7 +13378,7 @@
 				)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "43"
 			(at 335.28 68.326 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17676,7 +17676,7 @@
 				)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "43"
 			(at 335.28 63.246 90)
 			(show_name no)
 			(do_not_autoplace no)

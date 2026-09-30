@@ -12,12 +12,12 @@
 
 typedef enum
 {
-    IBUS_CHAN_DIR = 0,
+    IBUS_CHAN_DIR = (1-1),
     IBUS_CHAN_LIGHTS_MFC = (2-1),
     IBUS_CHAN_THROTTLE = (3-1),
     IBUS_CHAN_THROTTLE_X = (4-1),
-    IBUS_CHAN_GEAR_SW = (5-1),
-    IBUS_CHAN_BEACON_SW = (6-1),
+    IBUS_CHAN_GEAR_SW = (6-1),
+    IBUS_CHAN_BEACON_SW = (5-1),
     IBUS_CHAN_LIGHTS_SW = (7-1),
     //IBUS_CHAN_LIGHTS_SW = (8-1),
     //IBUS_CHAN_POT_A = (9-1),

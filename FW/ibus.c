@@ -9,7 +9,7 @@
 //#define DBG
 #define RX_SBUS_IN_PIN 9     //UART1 RX
 #define SBUS_NEXT_FRAME_TIMEGAP 3000 //us cca 7ms chodia frame, a jeden trva 32*10*1/115200 = 2.7ms
-
+#define IBUS_TIMEOUT 1000000 //IBUS timeout 1s
 typedef enum
 {
     IBUS_STATE_IDLE,
@@ -145,9 +145,13 @@ void ibus_init(void) {
  */
 void ibus_service(void) {
     static uint32_t cnt = 0;
+    static uint32_t received_data_time = 0;
+
 
     //save store channel data
     if (IBUS_data_received) {
+        //printf("R\n");
+        received_data_time = time_us_32();
         first_data_received = true;
         uint32_t int_flags = save_and_disable_interrupts();
         for(uint8_t i=0;i<14;i++) {
@@ -167,7 +171,18 @@ void ibus_service(void) {
 #endif
         IBUS_data_received = false;
     }
+    //if timeout , set channels to 1500 - neutral
+    if ((uint32_t) (time_us_32() - received_data_time) > IBUS_TIMEOUT) {
+        uint32_t int_flags = save_and_disable_interrupts();
+        for(uint8_t i=0;i<14;i++) {
+            channel_data_saved[i] = 1500;
+        }
+        restore_interrupts(int_flags);
+        received_data_time = time_us_32();
+        //printf("IBUS_TIMEOUT\n");
+    }
 }
+
 
 uint16_t ibus_get_channel (ibus_channel chan) {
     return channel_data_saved[chan];
